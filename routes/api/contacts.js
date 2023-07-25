@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 
 const {
@@ -8,7 +7,12 @@ const {
   removeById,
   add,
   updateById
-} = require("../../controllers");
+} = require("../../controllers/contacts");
+
+const {
+  validateAdd,
+  validateUpdate,
+} = require("../../middlewares/ValidateError")
 
 // получение всего списка
 router.get("/", getAll);
@@ -17,13 +21,13 @@ router.get("/", getAll);
 router.get("/:contactId", getById);
 
 // добавление
-router.post("/", add);
+router.post("/", validateAdd, add);
 
 // удаление по id
 router.delete("/:contactId", removeById);
 
 // изменение по id
-router.put('/:contactId', updateById)
+router.put('/:contactId', validateUpdate, updateById)
 
 
 module.exports = router;
