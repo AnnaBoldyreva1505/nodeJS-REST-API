@@ -1,25 +1,33 @@
-const express = require('express')
+const express = require("express");
+const router = express.Router();
 
-const router = express.Router()
+const {
+  getAll,
+  getById,
+  removeById,
+  add,
+  updateById
+} = require("../../controllers/contacts");
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+const {
+  validateAdd,
+  validateUpdate,
+} = require("../../middlewares/ValidateError")
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+// получение всего списка
+router.get("/", getAll);
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+// получение по id
+router.get("/:contactId", getById);
 
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+// добавление
+router.post("/", validateAdd, add);
 
-router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+// удаление по id
+router.delete("/:contactId", removeById);
 
-module.exports = router
+// изменение по id
+router.put('/:contactId', validateUpdate, updateById)
+
+
+module.exports = router;
