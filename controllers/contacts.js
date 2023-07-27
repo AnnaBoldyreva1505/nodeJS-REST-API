@@ -1,11 +1,4 @@
 const contacts = require("../models/contacts");
-// const Joi = require("joi");
-
-// const addSchema = Joi.object({
-//   name: Joi.string().required(),
-//   email: Joi.string().required(),
-//   phone: Joi.string().required(),
-// });
 
 const getAll = async (req, res) => {
   const result = await contacts.listContacts();
@@ -21,12 +14,6 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-//   const { error } = addSchema.validate(req.body);
-
-//   if (error) {
-//     return res.status(400).json({ message: "missing required name field" });
-//   }
-
   const newContact = await contacts.addContact(req.body);
   res.status(201).json(newContact);
 };
@@ -43,11 +30,6 @@ const removeById = async (req, res) => {
 };
 
 const updateById = async (req, res) => {
-//   const { error } = addSchema.validate(req.body);
-//   if (error) {
-//     res.status(400).json({ message: "Missing fields." });
-//   }
-
   const { contactId } = req.params;
   const updatedContact = await contacts.updateContact(contactId, req.body);
 
