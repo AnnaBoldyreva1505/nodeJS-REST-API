@@ -1,4 +1,5 @@
 const express = require("express");
+const authenticate = require("../../middlewares/authenticate");
 const router = express.Router();
 
 const {
@@ -17,21 +18,21 @@ const {
 } = require("../../middlewares/ValidateError")
 
 // получение всего списка
-router.get("/", getAll);
+router.get("/", authenticate, getAll);
 
 // получение по id
-router.get("/:contactId", getById);
+router.get("/:contactId", authenticate, getById);
 
 // // добавление
-router.post("/", validateAdd, add);
+router.post("/", authenticate, validateAdd, add);
 
 // // удаление по id
-router.delete("/:contactId", removeById);
+router.delete("/:contactId", authenticate, removeById);
 
 // // изменение по id
-router.put('/:contactId', validateUpdate, updateById)
+router.put('/:contactId', authenticate, validateUpdate, updateById)
 
-router.patch("/:contactId/favorite", favoriteValidator, updateStatusContact)
+router.patch("/:contactId/favorite", authenticate, favoriteValidator, updateStatusContact)
 
 
 module.exports = router;
