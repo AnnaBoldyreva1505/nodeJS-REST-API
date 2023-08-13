@@ -5,7 +5,7 @@ const RequestError = require("../middlewares/RequestError");
 const { SECRET_KEY } = process.env;
 const jwt = require("jsonwebtoken");
 const gravatar = require('gravatar');
-const fs = require('fs');
+const fs = require('fs/promises');
 const Jimp = require("jimp");
 
 const registerCtrl = async (req, res) => {
