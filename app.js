@@ -15,6 +15,11 @@ app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
 
+
+
+// Создай папку public для раздачи статики. В этой папке сделай папку avatars. Настрой Express на раздачу статических файлов из папки public.
+app.use(express.static("public"));
+
 app.use('/api/contacts', contactsRouter)
 app.use("/api/auth", authRouter)
 
