@@ -3,7 +3,14 @@ const validateBody = require("../../middlewares/validateBody");
 const authenticate = require("../../middlewares/authenticate");
 const ctrlWrapper = require("../../middlewares/ctrlWrapper");
 const { schemas } = require("../../models/user");
-const { registerCtrl, loginCtrl, getCurrent, logout } = require("../../controllers/auth");
+const {
+  registerCtrl,
+  loginCtrl,
+  getCurrent,
+  logout,
+  updateAvatar,
+} = require("../../controllers/auth");
+const { upload } = require("../../middlewares/uploadAvatar");
 const router = express.Router();
 // signup
 router.post(
@@ -17,7 +24,15 @@ router.post(
   validateBody(schemas.loginSchema),
   ctrlWrapper(loginCtrl)
 );
-router.get("/current", authenticate, ctrlWrapper(getCurrent))
-router.get("/logout", authenticate, ctrlWrapper(logout))
+router.get("/current", authenticate, ctrlWrapper(getCurrent));
+router.get("/logout", authenticate, ctrlWrapper(logout));
 // router.patch('/users/:id/subscription', authenticate, validateBody(schemas.subscriptionSchema), ctrlWrapper(ctrl.subscription))
+
+router.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  ctrlWrapper(updateAvatar)
+);
+
 module.exports = router;
