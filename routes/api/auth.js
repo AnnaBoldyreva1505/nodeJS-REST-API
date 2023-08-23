@@ -9,6 +9,8 @@ const {
   getCurrent,
   logout,
   updateAvatar,
+  verify,
+  resendEmail,
 } = require("../../controllers/auth");
 const { upload } = require("../../middlewares/uploadAvatar");
 const router = express.Router();
@@ -34,5 +36,11 @@ router.patch(
   upload.single("avatar"),
   ctrlWrapper(updateAvatar)
 );
+
+
+router.get("/verify/:verificationToken", ctrlWrapper(verify))
+
+router.post("/verify", validateBody(schemas.verifyEmailSchema), ctrlWrapper(resendEmail))
+
 
 module.exports = router;
